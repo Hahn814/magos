@@ -1,0 +1,63 @@
+{
+	"name": "Python 3",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/usr/src/app",
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2.12.2": {},
+		"ghcr.io/devcontainers/features/git:1": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"njpwerner.autodocstring",
+				"charliermarsh.ruff",
+				"eamodio.gitlens",
+				"github.vscode-github-actions",
+				"redhat.vscode-yaml",
+				"GitHub.copilot",
+				"GitHub.copilot-chat"
+			],
+			"settings": {
+				"github.copilot.chat.commitMessageGeneration.instructions": [
+					{
+						"text": "Follow the Conventional Commits format: type(scope): description."
+					},
+					{
+						"text": "Use imperative mood for the description (e.g., 'Add feature' not 'Added feature')."
+					},
+					{
+						"text": "Keep the subject line under 50 characters."
+					},
+					{
+						"text": "Use appropriate types: feat, fix, docs, style, refactor, perf, test, chore, ci."
+					},
+					{
+						"text": "Include a scope when relevant (e.g., api, ui, auth)."
+					},
+					{
+						"text": "For additional details, use a well-structured body section, using bullet points (*) for clarity."
+					}
+				],
+				"[yaml]": {
+					"editor.defaultFormatter": "redhat.vscode-yaml"
+				},
+				"[github-actions-workflow]": {
+					"editor.defaultFormatter": "redhat.vscode-yaml"
+				},
+				"yaml.schemas": {
+					"https://json.schemastore.org/github-workflow.json": [
+						"*.github/workflows/*.yaml",
+						"*.github/workflows/*.yml"
+					],
+					"https://json.schemastore.org/github-action.json": [
+						"action.yaml",
+						"action.yml",
+					]
+				}
+			}
+		}
+	}
+}
