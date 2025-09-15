@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package legion.v1;
+option go_package = "cmd/legion";
+
+
+service Legion {
+    rpc Ping (PingRequest) returns (PingResponse) {}
+}
+
+message PingRequest {
+    string message = 1;
+}
+
+message PingResponse {
+    string message = 1;
+}
