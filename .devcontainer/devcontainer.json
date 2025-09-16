@@ -9,7 +9,8 @@
 			"extensions": [
 				"GitHub.copilot",
 				"GitHub.copilot-chat",
-				"golang.go"
+				"golang.go",
+				"Gruntfuggly.todo-tree"
 			],
 			"settings": {
 				"github.copilot.chat.commitMessageGeneration.instructions": [
