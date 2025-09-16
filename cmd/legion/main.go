@@ -24,8 +24,13 @@ func main() {
 	viper.BindEnv("port")
 	viper.SetDefault("port", 50051)
 	port := viper.GetInt("port")
+	addr := viper.GetString("addr")
 
-	lis, err := net.Listen("tcp", fmt.Sprintf("0.0.0.0:%d", port))
+	if addr == "" {
+		addr = "0.0.0.0"
+	}
+
+	lis, err := net.Listen("tcp", fmt.Sprintf("%s:%d", addr, port))
 	if err != nil {
 		logger.Error("Failed to listen", "error", err)
 		os.Exit(1)
