@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Legion_Ping_FullMethodName = "/legion.v1.Legion/Ping"
+	Legion_Hello_FullMethodName = "/legion.v1.Legion/Hello"
 )
 
 // LegionClient is the client API for Legion service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LegionClient interface {
-	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingResponse, error)
+	Hello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error)
 }
 
 type legionClient struct {
@@ -37,10 +37,10 @@ func NewLegionClient(cc grpc.ClientConnInterface) LegionClient {
 	return &legionClient{cc}
 }
 
-func (c *legionClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingResponse, error) {
+func (c *legionClient) Hello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(PingResponse)
-	err := c.cc.Invoke(ctx, Legion_Ping_FullMethodName, in, out, cOpts...)
+	out := new(HelloResponse)
+	err := c.cc.Invoke(ctx, Legion_Hello_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +51,7 @@ func (c *legionClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.C
 // All implementations must embed UnimplementedLegionServer
 // for forward compatibility.
 type LegionServer interface {
-	Ping(context.Context, *PingRequest) (*PingResponse, error)
+	Hello(context.Context, *HelloRequest) (*HelloResponse, error)
 	mustEmbedUnimplementedLegionServer()
 }
 
@@ -62,8 +62,8 @@ type LegionServer interface {
 // pointer dereference when methods are called.
 type UnimplementedLegionServer struct{}
 
-func (UnimplementedLegionServer) Ping(context.Context, *PingRequest) (*PingResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
+func (UnimplementedLegionServer) Hello(context.Context, *HelloRequest) (*HelloResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Hello not implemented")
 }
 func (UnimplementedLegionServer) mustEmbedUnimplementedLegionServer() {}
 func (UnimplementedLegionServer) testEmbeddedByValue()                {}
@@ -86,20 +86,20 @@ func RegisterLegionServer(s grpc.ServiceRegistrar, srv LegionServer) {
 	s.RegisterService(&Legion_ServiceDesc, srv)
 }
 
-func _Legion_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PingRequest)
+func _Legion_Hello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HelloRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LegionServer).Ping(ctx, in)
+		return srv.(LegionServer).Hello(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Legion_Ping_FullMethodName,
+		FullMethod: Legion_Hello_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LegionServer).Ping(ctx, req.(*PingRequest))
+		return srv.(LegionServer).Hello(ctx, req.(*HelloRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -112,8 +112,8 @@ var Legion_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*LegionServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Ping",
-			Handler:    _Legion_Ping_Handler,
+			MethodName: "Hello",
+			Handler:    _Legion_Hello_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

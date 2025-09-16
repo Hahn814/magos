@@ -21,27 +21,27 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type PingRequest struct {
+type HelloRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *PingRequest) Reset() {
-	*x = PingRequest{}
+func (x *HelloRequest) Reset() {
+	*x = HelloRequest{}
 	mi := &file_proto_legion_v1_legion_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *PingRequest) String() string {
+func (x *HelloRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*PingRequest) ProtoMessage() {}
+func (*HelloRequest) ProtoMessage() {}
 
-func (x *PingRequest) ProtoReflect() protoreflect.Message {
+func (x *HelloRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_legion_v1_legion_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -53,39 +53,39 @@ func (x *PingRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use PingRequest.ProtoReflect.Descriptor instead.
-func (*PingRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use HelloRequest.ProtoReflect.Descriptor instead.
+func (*HelloRequest) Descriptor() ([]byte, []int) {
 	return file_proto_legion_v1_legion_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *PingRequest) GetMessage() string {
+func (x *HelloRequest) GetName() string {
 	if x != nil {
-		return x.Message
+		return x.Name
 	}
 	return ""
 }
 
-type PingResponse struct {
+type HelloResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *PingResponse) Reset() {
-	*x = PingResponse{}
+func (x *HelloResponse) Reset() {
+	*x = HelloResponse{}
 	mi := &file_proto_legion_v1_legion_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *PingResponse) String() string {
+func (x *HelloResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*PingResponse) ProtoMessage() {}
+func (*HelloResponse) ProtoMessage() {}
 
-func (x *PingResponse) ProtoReflect() protoreflect.Message {
+func (x *HelloResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_legion_v1_legion_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -97,14 +97,14 @@ func (x *PingResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use PingResponse.ProtoReflect.Descriptor instead.
-func (*PingResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use HelloResponse.ProtoReflect.Descriptor instead.
+func (*HelloResponse) Descriptor() ([]byte, []int) {
 	return file_proto_legion_v1_legion_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *PingResponse) GetMessage() string {
+func (x *HelloResponse) GetName() string {
 	if x != nil {
-		return x.Message
+		return x.Name
 	}
 	return ""
 }
@@ -113,13 +113,13 @@ var File_proto_legion_v1_legion_proto protoreflect.FileDescriptor
 
 const file_proto_legion_v1_legion_proto_rawDesc = "" +
 	"\n" +
-	"\x1cproto/legion/v1/legion.proto\x12\tlegion.v1\"'\n" +
-	"\vPingRequest\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"(\n" +
-	"\fPingResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2C\n" +
-	"\x06Legion\x129\n" +
-	"\x04Ping\x12\x16.legion.v1.PingRequest\x1a\x17.legion.v1.PingResponse\"\x00B\fZ\n" +
+	"\x1cproto/legion/v1/legion.proto\x12\tlegion.v1\"\"\n" +
+	"\fHelloRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\"#\n" +
+	"\rHelloResponse\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name2F\n" +
+	"\x06Legion\x12<\n" +
+	"\x05Hello\x12\x17.legion.v1.HelloRequest\x1a\x18.legion.v1.HelloResponse\"\x00B\fZ\n" +
 	"cmd/legionb\x06proto3"
 
 var (
@@ -136,12 +136,12 @@ func file_proto_legion_v1_legion_proto_rawDescGZIP() []byte {
 
 var file_proto_legion_v1_legion_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_proto_legion_v1_legion_proto_goTypes = []any{
-	(*PingRequest)(nil),  // 0: legion.v1.PingRequest
-	(*PingResponse)(nil), // 1: legion.v1.PingResponse
+	(*HelloRequest)(nil),  // 0: legion.v1.HelloRequest
+	(*HelloResponse)(nil), // 1: legion.v1.HelloResponse
 }
 var file_proto_legion_v1_legion_proto_depIdxs = []int32{
-	0, // 0: legion.v1.Legion.Ping:input_type -> legion.v1.PingRequest
-	1, // 1: legion.v1.Legion.Ping:output_type -> legion.v1.PingResponse
+	0, // 0: legion.v1.Legion.Hello:input_type -> legion.v1.HelloRequest
+	1, // 1: legion.v1.Legion.Hello:output_type -> legion.v1.HelloResponse
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
