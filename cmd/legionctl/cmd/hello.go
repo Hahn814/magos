@@ -7,6 +7,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"os/user"
 	"time"
 
 	legionpb "github.com/Hahn814/legion/proto/legion/v1"
@@ -16,16 +17,12 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-// pingCmd represents the ping command
-var pingCmd = &cobra.Command{
-	Use:   "ping",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+var username = ""
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+// helloCmd represents the ping command
+var helloCmd = &cobra.Command{
+	Use:   "hello",
+	Short: "Submit a HelloRequest to the Legion daemon",
 	Run: func(cmd *cobra.Command, args []string) {
 		viper.SetEnvPrefix("legion")
 		viper.BindEnv("port")
@@ -47,7 +44,17 @@ to quickly create a Cobra application.`,
 		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 		defer cancel()
 
-		r, err := c.Hello(ctx, &legionpb.HelloRequest{Name: "legionctl"})
+		if username == "" {
+			currentUser, err := user.Current()
+			if err != nil {
+				logger.Error("Error getting current user", "error", err)
+				os.Exit(1)
+			}
+
+			username = currentUser.Username
+		}
+
+		r, err := c.Hello(ctx, &legionpb.HelloRequest{Name: username})
 		if err != nil {
 			logger.Error("could not ping %v", "error", err)
 			os.Exit(1)
@@ -58,15 +65,7 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	rootCmd.AddCommand(pingCmd)
+	rootCmd.AddCommand(helloCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// pingCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// pingCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	helloCmd.Flags().StringVar(&username, "name", "", "Alternate name to provide in the HelloRequest (Default is current OS user")
 }
