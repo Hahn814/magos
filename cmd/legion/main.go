@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log/slog"
 	"net"
@@ -11,13 +12,19 @@ import (
 	"google.golang.org/grpc"
 )
 
+var logLevel = new(slog.LevelVar) // INFO by default
+var logger = slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: logLevel}))
+
 type legionServer struct {
 	legionpb.UnimplementedLegionServer
 }
 
+func (s *legionServer) Hello(_ context.Context, in *legionpb.HelloRequest) (*legionpb.HelloResponse, error) {
+	logger.Debug("recieved: %v", "message", in.GetName())
+	return &legionpb.HelloResponse{Name: "Hello " + in.GetName()}, nil
+}
+
 func main() {
-	var logLevel = new(slog.LevelVar) // INFO by default
-	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: logLevel}))
 	logLevel.Set(slog.LevelDebug) // TODO: bind log level to environment
 
 	viper.SetEnvPrefix("legion")
