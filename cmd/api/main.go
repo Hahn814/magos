@@ -7,7 +7,7 @@ import (
 	"net"
 	"os"
 
-	legionpb "github.com/Hahn814/legion/proto/legion/v1"
+	magospb "github.com/Hahn814/magos/proto/magos/v1"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 )
@@ -15,19 +15,19 @@ import (
 var logLevel = new(slog.LevelVar) // INFO by default
 var logger = slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: logLevel}))
 
-type legionServer struct {
-	legionpb.UnimplementedLegionServer
+type agent struct {
+	magospb.UnimplementedAgentServer
 }
 
-func (s *legionServer) Hello(_ context.Context, in *legionpb.HelloRequest) (*legionpb.HelloResponse, error) {
+func (s *agent) Hello(_ context.Context, in *magospb.HelloRequest) (*magospb.HelloResponse, error) {
 	logger.Debug("recieved: %v", "message", in.GetName())
-	return &legionpb.HelloResponse{Name: "Hello " + in.GetName()}, nil
+	return &magospb.HelloResponse{Name: "Hello " + in.GetName()}, nil
 }
 
 func main() {
 	logLevel.Set(slog.LevelDebug) // TODO: bind log level to environment
 
-	viper.SetEnvPrefix("legion")
+	viper.SetEnvPrefix("magos")
 	viper.BindEnv("port")
 	viper.SetDefault("port", 50051)
 	port := viper.GetInt("port")
@@ -43,10 +43,10 @@ func main() {
 		os.Exit(1)
 	}
 	s := grpc.NewServer()
-	legionpb.RegisterLegionServer(s, &legionServer{})
+	magospb.RegisterAgentServer(s, &agent{})
 
 	configAttrs := slog.Group("configuration", "port", port, "addr", lis.Addr())
-	logger.Info("Starting legion..", configAttrs)
+	logger.Info("Starting Magos agent service..", configAttrs)
 	if err := s.Serve(lis); err != nil {
 		logger.Error("Failed to serve", "error", err)
 		os.Exit(1)

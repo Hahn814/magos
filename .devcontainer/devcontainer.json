@@ -1,5 +1,5 @@
 {
-	"name": "Legion",
+	"name": "Magos",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
 	"workspaceFolder": "/usr/src/app",

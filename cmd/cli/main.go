@@ -21,7 +21,7 @@ THE SOFTWARE.
 */
 package main
 
-import "github.com/Hahn814/legion/cmd/legionctl/cmd"
+import "github.com/Hahn814/magos/cmd/cli/cmd"
 
 func main() {
 	cmd.Execute()

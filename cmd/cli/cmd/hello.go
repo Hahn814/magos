@@ -10,7 +10,7 @@ import (
 	"os/user"
 	"time"
 
-	legionpb "github.com/Hahn814/legion/proto/legion/v1"
+	magospb "github.com/Hahn814/magos/proto/magos/v1"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
@@ -22,9 +22,9 @@ var username = ""
 // helloCmd represents the ping command
 var helloCmd = &cobra.Command{
 	Use:   "hello",
-	Short: "Submit a HelloRequest to the Legion daemon",
+	Short: "Submit a HelloRequest to the Magos agent service",
 	Run: func(cmd *cobra.Command, args []string) {
-		viper.SetEnvPrefix("legion")
+		viper.SetEnvPrefix("magos")
 		viper.BindEnv("port")
 		viper.SetDefault("port", 50051)
 		port := viper.GetInt("port")
@@ -39,7 +39,7 @@ var helloCmd = &cobra.Command{
 			os.Exit(1)
 		}
 		defer conn.Close()
-		c := legionpb.NewLegionClient(conn)
+		c := magospb.NewAgentClient(conn)
 
 		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 		defer cancel()
@@ -54,7 +54,7 @@ var helloCmd = &cobra.Command{
 			username = currentUser.Username
 		}
 
-		r, err := c.Hello(ctx, &legionpb.HelloRequest{Name: username})
+		r, err := c.Hello(ctx, &magospb.HelloRequest{Name: username})
 		if err != nil {
 			logger.Error("could not ping %v", "error", err)
 			os.Exit(1)

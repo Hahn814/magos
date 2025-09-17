@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package legion.v1;
-option go_package = "cmd/legion";
+package magos.v1;
+option go_package = "cmd/api";
 
 
-service Legion {
+service Agent {
     rpc Hello (HelloRequest) returns (HelloResponse) {}
 }
 

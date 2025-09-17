@@ -35,8 +35,8 @@ var logLevel = new(slog.LevelVar) // INFO by default
 var logger = slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: logLevel}))
 
 var rootCmd = &cobra.Command{
-	Use:   "legionctl",
-	Short: "Command line interface to the Legion daemon",
+	Use:   "magosctl",
+	Short: "Command line interface to the Magos agent daemon",
 }
 
 func Execute() {
@@ -50,7 +50,7 @@ func init() {
 	logLevel.Set(slog.LevelDebug) // TODO: bind log level to environment
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.legion.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.magos.yaml)")
 }
 
 func initConfig() {
@@ -62,10 +62,10 @@ func initConfig() {
 		home, err := os.UserHomeDir()
 		cobra.CheckErr(err)
 
-		// Search config in home directory with name ".legionctl" (without extension).
+		// Search config in home directory with name ".magos" (without extension).
 		viper.AddConfigPath(home)
 		viper.SetConfigType("yaml")
-		viper.SetConfigName(".legion")
+		viper.SetConfigName(".magos")
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match

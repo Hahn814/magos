@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v3.21.12
-// source: proto/legion/v1/legion.proto
+// source: proto/magos/v1/daemon.proto
 
-package legion
+package api
 
 import (
 	context "context"
@@ -19,103 +19,103 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Legion_Hello_FullMethodName = "/legion.v1.Legion/Hello"
+	Agent_Hello_FullMethodName = "/magos.v1.Agent/Hello"
 )
 
-// LegionClient is the client API for Legion service.
+// AgentClient is the client API for Agent service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type LegionClient interface {
+type AgentClient interface {
 	Hello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error)
 }
 
-type legionClient struct {
+type agentClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewLegionClient(cc grpc.ClientConnInterface) LegionClient {
-	return &legionClient{cc}
+func NewAgentClient(cc grpc.ClientConnInterface) AgentClient {
+	return &agentClient{cc}
 }
 
-func (c *legionClient) Hello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error) {
+func (c *agentClient) Hello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(HelloResponse)
-	err := c.cc.Invoke(ctx, Legion_Hello_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Agent_Hello_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// LegionServer is the server API for Legion service.
-// All implementations must embed UnimplementedLegionServer
+// AgentServer is the server API for Agent service.
+// All implementations must embed UnimplementedAgentServer
 // for forward compatibility.
-type LegionServer interface {
+type AgentServer interface {
 	Hello(context.Context, *HelloRequest) (*HelloResponse, error)
-	mustEmbedUnimplementedLegionServer()
+	mustEmbedUnimplementedAgentServer()
 }
 
-// UnimplementedLegionServer must be embedded to have
+// UnimplementedAgentServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedLegionServer struct{}
+type UnimplementedAgentServer struct{}
 
-func (UnimplementedLegionServer) Hello(context.Context, *HelloRequest) (*HelloResponse, error) {
+func (UnimplementedAgentServer) Hello(context.Context, *HelloRequest) (*HelloResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Hello not implemented")
 }
-func (UnimplementedLegionServer) mustEmbedUnimplementedLegionServer() {}
-func (UnimplementedLegionServer) testEmbeddedByValue()                {}
+func (UnimplementedAgentServer) mustEmbedUnimplementedAgentServer() {}
+func (UnimplementedAgentServer) testEmbeddedByValue()               {}
 
-// UnsafeLegionServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to LegionServer will
+// UnsafeAgentServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AgentServer will
 // result in compilation errors.
-type UnsafeLegionServer interface {
-	mustEmbedUnimplementedLegionServer()
+type UnsafeAgentServer interface {
+	mustEmbedUnimplementedAgentServer()
 }
 
-func RegisterLegionServer(s grpc.ServiceRegistrar, srv LegionServer) {
-	// If the following call pancis, it indicates UnimplementedLegionServer was
+func RegisterAgentServer(s grpc.ServiceRegistrar, srv AgentServer) {
+	// If the following call pancis, it indicates UnimplementedAgentServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&Legion_ServiceDesc, srv)
+	s.RegisterService(&Agent_ServiceDesc, srv)
 }
 
-func _Legion_Hello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Agent_Hello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(HelloRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LegionServer).Hello(ctx, in)
+		return srv.(AgentServer).Hello(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Legion_Hello_FullMethodName,
+		FullMethod: Agent_Hello_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LegionServer).Hello(ctx, req.(*HelloRequest))
+		return srv.(AgentServer).Hello(ctx, req.(*HelloRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Legion_ServiceDesc is the grpc.ServiceDesc for Legion service.
+// Agent_ServiceDesc is the grpc.ServiceDesc for Agent service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Legion_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "legion.v1.Legion",
-	HandlerType: (*LegionServer)(nil),
+var Agent_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "magos.v1.Agent",
+	HandlerType: (*AgentServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Hello",
-			Handler:    _Legion_Hello_Handler,
+			Handler:    _Agent_Hello_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/legion/v1/legion.proto",
+	Metadata: "proto/magos/v1/daemon.proto",
 }
