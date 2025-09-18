@@ -1,0 +1,9 @@
+syntax = "proto3";
+package api;
+option go_package = "github.com/Hahn814/magos/proto/magos/v1/api";
+
+import "magos/v1/types/types.proto";
+
+service API {
+    rpc Hello (types.HelloRequest) returns (types.HelloResponse) {}
+}

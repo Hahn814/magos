@@ -7,7 +7,7 @@ import (
 	"net"
 	"os"
 
-	magosapipb "github.com/Hahn814/magos/proto/magos/v1/api"
+	magosagentpb "github.com/Hahn814/magos/proto/magos/v1/agent"
 	magostypespb "github.com/Hahn814/magos/proto/magos/v1/types"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
@@ -16,11 +16,11 @@ import (
 var logLevel = new(slog.LevelVar) // INFO by default
 var logger = slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: logLevel}))
 
-type api struct {
-	magosapipb.UnimplementedAPIServer
+type agent struct {
+	magosagentpb.UnimplementedAgentServer
 }
 
-func (s *api) Hello(_ context.Context, in *magostypespb.HelloRequest) (*magostypespb.HelloResponse, error) {
+func (s *agent) Hello(_ context.Context, in *magostypespb.HelloRequest) (*magostypespb.HelloResponse, error) {
 	logger.Debug("recieved: %v", "message", in.GetName())
 	return &magostypespb.HelloResponse{Name: "Hello " + in.GetName()}, nil
 }
@@ -28,9 +28,10 @@ func (s *api) Hello(_ context.Context, in *magostypespb.HelloRequest) (*magostyp
 func main() {
 	logLevel.Set(slog.LevelDebug) // TODO: bind log level to environment
 
+	// TODO: These options should be provided by the api server on creation
 	viper.SetEnvPrefix("magos")
 	viper.BindEnv("port")
-	viper.SetDefault("port", 50051)
+	viper.SetDefault("port", 50052)
 	port := viper.GetInt("port")
 	addr := viper.GetString("addr")
 
@@ -44,10 +45,10 @@ func main() {
 		os.Exit(1)
 	}
 	s := grpc.NewServer()
-	magosapipb.RegisterAPIServer(s, &api{})
+	magosagentpb.RegisterAgentServer(s, &agent{})
 
 	configAttrs := slog.Group("configuration", "port", port, "addr", lis.Addr())
-	logger.Info("Starting Magos API..", configAttrs)
+	logger.Info("Starting Magos agent service..", configAttrs)
 	if err := s.Serve(lis); err != nil {
 		logger.Error("Failed to serve", "error", err)
 		os.Exit(1)

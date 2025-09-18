@@ -2,9 +2,9 @@
 // versions:
 // 	protoc-gen-go v1.36.9
 // 	protoc        v3.21.12
-// source: proto/magos/v1/daemon.proto
+// source: magos/v1/types/types.proto
 
-package api
+package types
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -30,7 +30,7 @@ type HelloRequest struct {
 
 func (x *HelloRequest) Reset() {
 	*x = HelloRequest{}
-	mi := &file_proto_magos_v1_daemon_proto_msgTypes[0]
+	mi := &file_magos_v1_types_types_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -42,7 +42,7 @@ func (x *HelloRequest) String() string {
 func (*HelloRequest) ProtoMessage() {}
 
 func (x *HelloRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_magos_v1_daemon_proto_msgTypes[0]
+	mi := &file_magos_v1_types_types_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55,7 +55,7 @@ func (x *HelloRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HelloRequest.ProtoReflect.Descriptor instead.
 func (*HelloRequest) Descriptor() ([]byte, []int) {
-	return file_proto_magos_v1_daemon_proto_rawDescGZIP(), []int{0}
+	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *HelloRequest) GetName() string {
@@ -74,7 +74,7 @@ type HelloResponse struct {
 
 func (x *HelloResponse) Reset() {
 	*x = HelloResponse{}
-	mi := &file_proto_magos_v1_daemon_proto_msgTypes[1]
+	mi := &file_magos_v1_types_types_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -86,7 +86,7 @@ func (x *HelloResponse) String() string {
 func (*HelloResponse) ProtoMessage() {}
 
 func (x *HelloResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_magos_v1_daemon_proto_msgTypes[1]
+	mi := &file_magos_v1_types_types_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -99,7 +99,7 @@ func (x *HelloResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HelloResponse.ProtoReflect.Descriptor instead.
 func (*HelloResponse) Descriptor() ([]byte, []int) {
-	return file_proto_magos_v1_daemon_proto_rawDescGZIP(), []int{1}
+	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *HelloResponse) GetName() string {
@@ -109,65 +109,61 @@ func (x *HelloResponse) GetName() string {
 	return ""
 }
 
-var File_proto_magos_v1_daemon_proto protoreflect.FileDescriptor
+var File_magos_v1_types_types_proto protoreflect.FileDescriptor
 
-const file_proto_magos_v1_daemon_proto_rawDesc = "" +
+const file_magos_v1_types_types_proto_rawDesc = "" +
 	"\n" +
-	"\x1bproto/magos/v1/daemon.proto\x12\bmagos.v1\"\"\n" +
+	"\x1amagos/v1/types/types.proto\x12\x05types\"\"\n" +
 	"\fHelloRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\"#\n" +
 	"\rHelloResponse\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name2C\n" +
-	"\x05Agent\x12:\n" +
-	"\x05Hello\x12\x16.magos.v1.HelloRequest\x1a\x17.magos.v1.HelloResponse\"\x00B\tZ\acmd/apib\x06proto3"
+	"\x04name\x18\x01 \x01(\tR\x04nameB/Z-github.com/Hahn814/magos/proto/magos/v1/typesb\x06proto3"
 
 var (
-	file_proto_magos_v1_daemon_proto_rawDescOnce sync.Once
-	file_proto_magos_v1_daemon_proto_rawDescData []byte
+	file_magos_v1_types_types_proto_rawDescOnce sync.Once
+	file_magos_v1_types_types_proto_rawDescData []byte
 )
 
-func file_proto_magos_v1_daemon_proto_rawDescGZIP() []byte {
-	file_proto_magos_v1_daemon_proto_rawDescOnce.Do(func() {
-		file_proto_magos_v1_daemon_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_proto_magos_v1_daemon_proto_rawDesc), len(file_proto_magos_v1_daemon_proto_rawDesc)))
+func file_magos_v1_types_types_proto_rawDescGZIP() []byte {
+	file_magos_v1_types_types_proto_rawDescOnce.Do(func() {
+		file_magos_v1_types_types_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_magos_v1_types_types_proto_rawDesc), len(file_magos_v1_types_types_proto_rawDesc)))
 	})
-	return file_proto_magos_v1_daemon_proto_rawDescData
+	return file_magos_v1_types_types_proto_rawDescData
 }
 
-var file_proto_magos_v1_daemon_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_proto_magos_v1_daemon_proto_goTypes = []any{
-	(*HelloRequest)(nil),  // 0: magos.v1.HelloRequest
-	(*HelloResponse)(nil), // 1: magos.v1.HelloResponse
+var file_magos_v1_types_types_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_magos_v1_types_types_proto_goTypes = []any{
+	(*HelloRequest)(nil),  // 0: types.HelloRequest
+	(*HelloResponse)(nil), // 1: types.HelloResponse
 }
-var file_proto_magos_v1_daemon_proto_depIdxs = []int32{
-	0, // 0: magos.v1.Agent.Hello:input_type -> magos.v1.HelloRequest
-	1, // 1: magos.v1.Agent.Hello:output_type -> magos.v1.HelloResponse
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
+var file_magos_v1_types_types_proto_depIdxs = []int32{
+	0, // [0:0] is the sub-list for method output_type
+	0, // [0:0] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_proto_magos_v1_daemon_proto_init() }
-func file_proto_magos_v1_daemon_proto_init() {
-	if File_proto_magos_v1_daemon_proto != nil {
+func init() { file_magos_v1_types_types_proto_init() }
+func file_magos_v1_types_types_proto_init() {
+	if File_magos_v1_types_types_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_magos_v1_daemon_proto_rawDesc), len(file_proto_magos_v1_daemon_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_magos_v1_types_types_proto_rawDesc), len(file_magos_v1_types_types_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   2,
 			NumExtensions: 0,
-			NumServices:   1,
+			NumServices:   0,
 		},
-		GoTypes:           file_proto_magos_v1_daemon_proto_goTypes,
-		DependencyIndexes: file_proto_magos_v1_daemon_proto_depIdxs,
-		MessageInfos:      file_proto_magos_v1_daemon_proto_msgTypes,
+		GoTypes:           file_magos_v1_types_types_proto_goTypes,
+		DependencyIndexes: file_magos_v1_types_types_proto_depIdxs,
+		MessageInfos:      file_magos_v1_types_types_proto_msgTypes,
 	}.Build()
-	File_proto_magos_v1_daemon_proto = out.File
-	file_proto_magos_v1_daemon_proto_goTypes = nil
-	file_proto_magos_v1_daemon_proto_depIdxs = nil
+	File_magos_v1_types_types_proto = out.File
+	file_magos_v1_types_types_proto_goTypes = nil
+	file_magos_v1_types_types_proto_depIdxs = nil
 }

@@ -2,12 +2,13 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v3.21.12
-// source: proto/magos/v1/daemon.proto
+// source: magos/v1/agent/agent.proto
 
-package api
+package agent
 
 import (
 	context "context"
+	types "github.com/Hahn814/magos/proto/magos/v1/types"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -19,14 +20,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Agent_Hello_FullMethodName = "/magos.v1.Agent/Hello"
+	Agent_Hello_FullMethodName = "/agent.Agent/Hello"
 )
 
 // AgentClient is the client API for Agent service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AgentClient interface {
-	Hello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error)
+	Hello(ctx context.Context, in *types.HelloRequest, opts ...grpc.CallOption) (*types.HelloResponse, error)
 }
 
 type agentClient struct {
@@ -37,9 +38,9 @@ func NewAgentClient(cc grpc.ClientConnInterface) AgentClient {
 	return &agentClient{cc}
 }
 
-func (c *agentClient) Hello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error) {
+func (c *agentClient) Hello(ctx context.Context, in *types.HelloRequest, opts ...grpc.CallOption) (*types.HelloResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HelloResponse)
+	out := new(types.HelloResponse)
 	err := c.cc.Invoke(ctx, Agent_Hello_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -51,7 +52,7 @@ func (c *agentClient) Hello(ctx context.Context, in *HelloRequest, opts ...grpc.
 // All implementations must embed UnimplementedAgentServer
 // for forward compatibility.
 type AgentServer interface {
-	Hello(context.Context, *HelloRequest) (*HelloResponse, error)
+	Hello(context.Context, *types.HelloRequest) (*types.HelloResponse, error)
 	mustEmbedUnimplementedAgentServer()
 }
 
@@ -62,7 +63,7 @@ type AgentServer interface {
 // pointer dereference when methods are called.
 type UnimplementedAgentServer struct{}
 
-func (UnimplementedAgentServer) Hello(context.Context, *HelloRequest) (*HelloResponse, error) {
+func (UnimplementedAgentServer) Hello(context.Context, *types.HelloRequest) (*types.HelloResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Hello not implemented")
 }
 func (UnimplementedAgentServer) mustEmbedUnimplementedAgentServer() {}
@@ -87,7 +88,7 @@ func RegisterAgentServer(s grpc.ServiceRegistrar, srv AgentServer) {
 }
 
 func _Agent_Hello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HelloRequest)
+	in := new(types.HelloRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -99,7 +100,7 @@ func _Agent_Hello_Handler(srv interface{}, ctx context.Context, dec func(interfa
 		FullMethod: Agent_Hello_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AgentServer).Hello(ctx, req.(*HelloRequest))
+		return srv.(AgentServer).Hello(ctx, req.(*types.HelloRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -108,7 +109,7 @@ func _Agent_Hello_Handler(srv interface{}, ctx context.Context, dec func(interfa
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Agent_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "magos.v1.Agent",
+	ServiceName: "agent.Agent",
 	HandlerType: (*AgentServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -117,5 +118,5 @@ var Agent_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/magos/v1/daemon.proto",
+	Metadata: "magos/v1/agent/agent.proto",
 }

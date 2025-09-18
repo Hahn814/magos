@@ -10,7 +10,8 @@ import (
 	"os/user"
 	"time"
 
-	magospb "github.com/Hahn814/magos/proto/magos/v1"
+	magosapipb "github.com/Hahn814/magos/proto/magos/v1/api"
+	magostypespb "github.com/Hahn814/magos/proto/magos/v1/types"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
@@ -39,7 +40,7 @@ var helloCmd = &cobra.Command{
 			os.Exit(1)
 		}
 		defer conn.Close()
-		c := magospb.NewAgentClient(conn)
+		c := magosapipb.NewAPIClient(conn)
 
 		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 		defer cancel()
@@ -54,7 +55,7 @@ var helloCmd = &cobra.Command{
 			username = currentUser.Username
 		}
 
-		r, err := c.Hello(ctx, &magospb.HelloRequest{Name: username})
+		r, err := c.Hello(ctx, &magostypespb.HelloRequest{Name: username})
 		if err != nil {
 			logger.Error("could not ping %v", "error", err)
 			os.Exit(1)

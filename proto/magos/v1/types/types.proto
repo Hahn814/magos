@@ -1,0 +1,11 @@
+syntax = "proto3";
+package types;
+option go_package = "github.com/Hahn814/magos/proto/magos/v1/types";
+
+message HelloRequest {
+    string name = 1;
+}
+
+message HelloResponse {
+    string name = 1;
+}
