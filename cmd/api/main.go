@@ -25,14 +25,19 @@ func (s *api) Hello(_ context.Context, in *magostypespb.HelloRequest) (*magostyp
 	return &magostypespb.HelloResponse{Name: "Hello " + in.GetName()}, nil
 }
 
+func (s *api) RegisterAgentServer(_ context.Context, in *magostypespb.RegisterAgentServerRequest) (*magostypespb.RegisterAgentServerResponse, error) {
+	logger.Debug("register agent server", "agent", in)
+	return &magostypespb.RegisterAgentServerResponse{Address: in.GetAddress()}, nil
+}
+
 func main() {
 	logLevel.Set(slog.LevelDebug) // TODO: bind log level to environment
 
 	viper.SetEnvPrefix("magos")
-	viper.BindEnv("port")
-	viper.SetDefault("port", 50051)
-	port := viper.GetInt("port")
-	addr := viper.GetString("addr")
+	viper.BindEnv("api.port")
+	viper.SetDefault("api.port", 50051)
+	port := viper.GetInt("api.port")
+	addr := viper.GetString("api.addr")
 
 	if addr == "" {
 		addr = "0.0.0.0"

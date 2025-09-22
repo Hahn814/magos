@@ -26,10 +26,10 @@ var helloCmd = &cobra.Command{
 	Short: "Submit a HelloRequest to the Magos agent service",
 	Run: func(cmd *cobra.Command, args []string) {
 		viper.SetEnvPrefix("magos")
-		viper.BindEnv("port")
-		viper.SetDefault("port", 50051)
-		port := viper.GetInt("port")
-		addr := viper.GetString("addr")
+		viper.BindEnv("api.port")
+		viper.SetDefault("api.port", 50051)
+		port := viper.GetInt("api.port")
+		addr := viper.GetString("api.addr")
 		if addr == "" {
 			addr = "0.0.0.0"
 		}

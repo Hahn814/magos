@@ -109,6 +109,94 @@ func (x *HelloResponse) GetName() string {
 	return ""
 }
 
+type RegisterAgentServerRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Address       string                 `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RegisterAgentServerRequest) Reset() {
+	*x = RegisterAgentServerRequest{}
+	mi := &file_magos_v1_types_types_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RegisterAgentServerRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegisterAgentServerRequest) ProtoMessage() {}
+
+func (x *RegisterAgentServerRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_magos_v1_types_types_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegisterAgentServerRequest.ProtoReflect.Descriptor instead.
+func (*RegisterAgentServerRequest) Descriptor() ([]byte, []int) {
+	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *RegisterAgentServerRequest) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+type RegisterAgentServerResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Address       string                 `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RegisterAgentServerResponse) Reset() {
+	*x = RegisterAgentServerResponse{}
+	mi := &file_magos_v1_types_types_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RegisterAgentServerResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegisterAgentServerResponse) ProtoMessage() {}
+
+func (x *RegisterAgentServerResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_magos_v1_types_types_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegisterAgentServerResponse.ProtoReflect.Descriptor instead.
+func (*RegisterAgentServerResponse) Descriptor() ([]byte, []int) {
+	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *RegisterAgentServerResponse) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
 var File_magos_v1_types_types_proto protoreflect.FileDescriptor
 
 const file_magos_v1_types_types_proto_rawDesc = "" +
@@ -117,7 +205,11 @@ const file_magos_v1_types_types_proto_rawDesc = "" +
 	"\fHelloRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\"#\n" +
 	"\rHelloResponse\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04nameB/Z-github.com/Hahn814/magos/proto/magos/v1/typesb\x06proto3"
+	"\x04name\x18\x01 \x01(\tR\x04name\"6\n" +
+	"\x1aRegisterAgentServerRequest\x12\x18\n" +
+	"\aaddress\x18\x01 \x01(\tR\aaddress\"7\n" +
+	"\x1bRegisterAgentServerResponse\x12\x18\n" +
+	"\aaddress\x18\x01 \x01(\tR\aaddressB/Z-github.com/Hahn814/magos/proto/magos/v1/typesb\x06proto3"
 
 var (
 	file_magos_v1_types_types_proto_rawDescOnce sync.Once
@@ -131,10 +223,12 @@ func file_magos_v1_types_types_proto_rawDescGZIP() []byte {
 	return file_magos_v1_types_types_proto_rawDescData
 }
 
-var file_magos_v1_types_types_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_magos_v1_types_types_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_magos_v1_types_types_proto_goTypes = []any{
-	(*HelloRequest)(nil),  // 0: types.HelloRequest
-	(*HelloResponse)(nil), // 1: types.HelloResponse
+	(*HelloRequest)(nil),                // 0: types.HelloRequest
+	(*HelloResponse)(nil),               // 1: types.HelloResponse
+	(*RegisterAgentServerRequest)(nil),  // 2: types.RegisterAgentServerRequest
+	(*RegisterAgentServerResponse)(nil), // 3: types.RegisterAgentServerResponse
 }
 var file_magos_v1_types_types_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -155,7 +249,7 @@ func file_magos_v1_types_types_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_magos_v1_types_types_proto_rawDesc), len(file_magos_v1_types_types_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

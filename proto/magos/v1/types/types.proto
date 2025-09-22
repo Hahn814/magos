@@ -9,3 +9,11 @@ message HelloRequest {
 message HelloResponse {
     string name = 1;
 }
+
+message RegisterAgentServerRequest {
+    string address = 1;
+}
+
+message RegisterAgentServerResponse {
+    string address = 1;
+}

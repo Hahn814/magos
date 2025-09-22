@@ -25,19 +25,24 @@ var File_magos_v1_api_api_proto protoreflect.FileDescriptor
 
 const file_magos_v1_api_api_proto_rawDesc = "" +
 	"\n" +
-	"\x16magos/v1/api/api.proto\x12\x03api\x1a\x1amagos/v1/types/types.proto2;\n" +
+	"\x16magos/v1/api/api.proto\x12\x03api\x1a\x1amagos/v1/types/types.proto2\x9b\x01\n" +
 	"\x03API\x124\n" +
-	"\x05Hello\x12\x13.types.HelloRequest\x1a\x14.types.HelloResponse\"\x00B-Z+github.com/Hahn814/magos/proto/magos/v1/apib\x06proto3"
+	"\x05Hello\x12\x13.types.HelloRequest\x1a\x14.types.HelloResponse\"\x00\x12^\n" +
+	"\x13RegisterAgentServer\x12!.types.RegisterAgentServerRequest\x1a\".types.RegisterAgentServerResponse\"\x00B-Z+github.com/Hahn814/magos/proto/magos/v1/apib\x06proto3"
 
 var file_magos_v1_api_api_proto_goTypes = []any{
-	(*types.HelloRequest)(nil),  // 0: types.HelloRequest
-	(*types.HelloResponse)(nil), // 1: types.HelloResponse
+	(*types.HelloRequest)(nil),                // 0: types.HelloRequest
+	(*types.RegisterAgentServerRequest)(nil),  // 1: types.RegisterAgentServerRequest
+	(*types.HelloResponse)(nil),               // 2: types.HelloResponse
+	(*types.RegisterAgentServerResponse)(nil), // 3: types.RegisterAgentServerResponse
 }
 var file_magos_v1_api_api_proto_depIdxs = []int32{
 	0, // 0: api.API.Hello:input_type -> types.HelloRequest
-	1, // 1: api.API.Hello:output_type -> types.HelloResponse
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
+	1, // 1: api.API.RegisterAgentServer:input_type -> types.RegisterAgentServerRequest
+	2, // 2: api.API.Hello:output_type -> types.HelloResponse
+	3, // 3: api.API.RegisterAgentServer:output_type -> types.RegisterAgentServerResponse
+	2, // [2:4] is the sub-list for method output_type
+	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
