@@ -3,7 +3,6 @@ up: build
 
 build: protoc
 	go build -o /home/magos/go/bin/magosapi ./cmd/api/
-	go build -o /home/magos/go/bin/magosctl ./cmd/cli/
 	go build -o /home/magos/go/bin/magosagent ./cmd/agent/
 
 protoc:

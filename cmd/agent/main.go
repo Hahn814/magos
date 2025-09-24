@@ -34,18 +34,49 @@ func (s *agent) Hello(_ context.Context, in *magostypespb.HelloRequest) (*magost
 
 func (s *api) registerAgentServer(_ context.Context, in *magostypespb.RegisterAgentServerRequest) {
 
-	conn, err := grpc.NewClient(s.Address, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	// TODO: Bind retry policy params to environment
+	retryPolicy := fmt.Sprintf(`{
+		"methodConfig": [
+			{
+			"name": [
+				{
+				"service": "api.API",
+				"method": "RegisterAgentServer"
+				}
+			],
+			"timeout": "%ds",
+			"retryPolicy": {
+				"maxAttempts": 5,
+				"initialBackoff": "10s",
+				"maxBackoff": "180s",
+				"backoffMultiplier": 6,
+				"retryableStatusCodes": [
+				"UNAVAILABLE",
+				"DEADLINE_EXCEEDED"
+				]
+			}
+			}
+		]
+	}`, int(5*time.Minute.Seconds()))
+
+	dialOpts := []grpc.DialOption{
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithDefaultServiceConfig(retryPolicy),
+		grpc.WithMaxCallAttempts(5),
+	}
+	conn, err := grpc.NewClient(s.Address, dialOpts...)
 	if err != nil {
 		logger.Error("did not connect", "error", err)
 		os.Exit(1)
 	}
 	defer conn.Close()
-	c := magosapipb.NewAPIClient(conn)
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	client := magosapipb.NewAPIClient(conn)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Hour)
 	defer cancel()
 
-	r, err := c.RegisterAgentServer(ctx, in)
+	r, err := client.RegisterAgentServer(ctx, in)
 	if err != nil {
 		logger.Error("could not reigster agent", "error", err)
 		os.Exit(2)
@@ -72,35 +103,60 @@ func findOpenPrivatePort(minPort int, maxPort int) (int, error) {
 func main() {
 	logLevel.Set(slog.LevelDebug) // TODO: bind log level to environment
 
-	addr := "0.0.0.0"
-	port, err := findOpenPrivatePort(49152, 65535)
-	if err != nil {
-		logger.Error("Failed to find open port", "error", err)
+	agentReady := make(chan bool)
+	agentError := make(chan error)
+
+	go func() {
+		// TODO: refactor to be reciever function provided by the api and agent types
+		addr := "0.0.0.0"
+		port, err := findOpenPrivatePort(49152, 65535)
+		if err != nil {
+			logger.Error("Failed to find open port", "error", err)
+			os.Exit(1)
+		}
+
+		agent_addr := fmt.Sprintf("%s:%d", addr, port)
+		lis, err := net.Listen("tcp", agent_addr)
+		if err != nil {
+			logger.Error("Failed to listen", "error", err)
+			os.Exit(1)
+		}
+		s := grpc.NewServer()
+		magosagentpb.RegisterAgentServer(s, &agent{})
+
+		go func() {
+			configAttrs := slog.Group("configuration", "port", port, "addr", lis.Addr())
+			logger.Info("Starting Magos agent service..", configAttrs)
+
+			// TODO: get api server addr from env
+			// TODO: get api server port from env
+			api := &api{
+				Address: fmt.Sprintf("%s:%d", addr, 50051),
+			}
+			ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+			defer cancel()
+			api.registerAgentServer(ctx, &magostypespb.RegisterAgentServerRequest{Address: agent_addr})
+			if err := s.Serve(lis); err != nil {
+				logger.Error("Failed to serve", "error", err)
+				agentError <- err
+			}
+
+			agentReady <- true // TODO: replace with actual readiness test
+		}()
+
+	}()
+
+	select {
+	case <-agentReady:
+		logger.Info("agent is ready")
+	case err := <-agentError:
+		logger.Error("failed to start agent", "error", err)
+		os.Exit(1)
+	case <-time.After(time.Hour):
+		logger.Error("failed to start agent after time.")
 		os.Exit(1)
 	}
 
-	agent_addr := fmt.Sprintf("%s:%d", addr, port)
-	lis, err := net.Listen("tcp", agent_addr)
-	if err != nil {
-		logger.Error("Failed to listen", "error", err)
-		os.Exit(1)
-	}
-	s := grpc.NewServer()
-	magosagentpb.RegisterAgentServer(s, &agent{})
-
-	configAttrs := slog.Group("configuration", "port", port, "addr", lis.Addr())
-	logger.Info("Starting Magos agent service..", configAttrs)
-
-	api := &api{
-		Address: fmt.Sprintf("%s:%d", addr, port),
-	}
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	defer cancel()
-	api.registerAgentServer(ctx, &magostypespb.RegisterAgentServerRequest{Address: agent_addr})
-
-	if err := s.Serve(lis); err != nil {
-		logger.Error("Failed to serve", "error", err)
-		os.Exit(1)
-	}
+	select {}
 
 }
