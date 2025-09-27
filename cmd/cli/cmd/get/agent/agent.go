@@ -1,37 +1,33 @@
 package get
 
 import (
-	"fmt"
+	"log/slog"
+	"os"
 
 	"github.com/Hahn814/magos/cmd/cli/cmd/get"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
+
+var logLevel = new(slog.LevelVar)
+var logger = slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: logLevel}))
 
 // agentCmd represents the agent command
 var agentCmd = &cobra.Command{
 	Use:   "agent",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "List a single agents details",
+	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("agent called")
+		logger.Debug("agent subcommand called", "args", args)
+		for _, agentId := range args {
+			// TODO: use the API server to get the registered agent details
+			logger.Debug("inspect", "agentId", agentId)
+		}
 	},
 }
 
 func init() {
+	logLevel.UnmarshalText([]byte(viper.GetString("verbosity")))
 	get.GetCmd.AddCommand(agentCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// agentCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// agentCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	agentCmd.Flags().BoolP("", "t", false, "Help message for toggle")
 }
