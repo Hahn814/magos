@@ -14,9 +14,18 @@ var logger = slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level:
 
 // agentCmd represents the agent command
 var agentCmd = &cobra.Command{
-	Use:   "agent",
+	Use:   "agent [agent_id]",
 	Short: "List a single agents details",
 	Long:  ``,
+	Args: func(cmd *cobra.Command, args []string) error {
+		err := cobra.MinimumNArgs(1)(cmd, args)
+		if err != nil {
+			logger.Error("agent id argument required")
+			return err
+		}
+
+		return nil
+	},
 	Run: func(cmd *cobra.Command, args []string) {
 		logger.Debug("agent subcommand called", "args", args)
 		for _, agentId := range args {
@@ -29,5 +38,4 @@ var agentCmd = &cobra.Command{
 func init() {
 	logLevel.UnmarshalText([]byte(viper.GetString("verbosity")))
 	get.GetCmd.AddCommand(agentCmd)
-	agentCmd.Flags().BoolP("", "t", false, "Help message for toggle")
 }
