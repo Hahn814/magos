@@ -1,7 +1,7 @@
 FROM golang:1-bookworm
 
-ARG GO_LOG_VERBOSITY_LEVEL=99
-ARG GO_LOG_SEVERITY_LEVEL=info
+# ARG GO_LOG_VERBOSITY_LEVEL=99
+# ARG GO_LOG_SEVERITY_LEVEL=info
 
 RUN useradd -ms /bin/bash magos \
     && apt update \
