@@ -101,7 +101,7 @@ func (s *api) registerAgentServer(_ context.Context, in *magostypespb.RegisterAg
 		os.Exit(2)
 	}
 
-	logger.Info("registered agent", "success", r.GetSuccess())
+	logger.Info("registered agent", "success", r.GetSuccess(), "id", id)
 }
 
 func findOpenPrivatePort(minPort int, maxPort int) (int, error) {

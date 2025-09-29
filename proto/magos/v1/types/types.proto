@@ -19,13 +19,24 @@ message RegisterAgentServerResponse {
     bool success = 1;
 }
 
-message GetAgentRequest {
+message Agent {
     string id = 1;
+    string hostname = 2;
+}
+
+message GetAgentRequest {
+    Agent agent = 1;
 }
 
 message GetAgentResponse {
-    string id = 1;
-    string hostname = 2;
+    Agent agent = 1;
+}
+
+message GetAgentsRequest {}
+
+
+message GetAgentsResponse {
+    repeated Agent agents = 1;
 }
 
 message DescribeAgentRequest {}

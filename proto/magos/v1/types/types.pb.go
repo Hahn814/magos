@@ -205,16 +205,68 @@ func (x *RegisterAgentServerResponse) GetSuccess() bool {
 	return false
 }
 
-type GetAgentRequest struct {
+type Agent struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Hostname      string                 `protobuf:"bytes,2,opt,name=hostname,proto3" json:"hostname,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Agent) Reset() {
+	*x = Agent{}
+	mi := &file_magos_v1_types_types_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Agent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Agent) ProtoMessage() {}
+
+func (x *Agent) ProtoReflect() protoreflect.Message {
+	mi := &file_magos_v1_types_types_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Agent.ProtoReflect.Descriptor instead.
+func (*Agent) Descriptor() ([]byte, []int) {
+	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *Agent) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Agent) GetHostname() string {
+	if x != nil {
+		return x.Hostname
+	}
+	return ""
+}
+
+type GetAgentRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Agent         *Agent                 `protobuf:"bytes,1,opt,name=agent,proto3" json:"agent,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetAgentRequest) Reset() {
 	*x = GetAgentRequest{}
-	mi := &file_magos_v1_types_types_proto_msgTypes[4]
+	mi := &file_magos_v1_types_types_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -226,7 +278,7 @@ func (x *GetAgentRequest) String() string {
 func (*GetAgentRequest) ProtoMessage() {}
 
 func (x *GetAgentRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_magos_v1_types_types_proto_msgTypes[4]
+	mi := &file_magos_v1_types_types_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -239,27 +291,26 @@ func (x *GetAgentRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAgentRequest.ProtoReflect.Descriptor instead.
 func (*GetAgentRequest) Descriptor() ([]byte, []int) {
-	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{4}
+	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *GetAgentRequest) GetId() string {
+func (x *GetAgentRequest) GetAgent() *Agent {
 	if x != nil {
-		return x.Id
+		return x.Agent
 	}
-	return ""
+	return nil
 }
 
 type GetAgentResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Hostname      string                 `protobuf:"bytes,2,opt,name=hostname,proto3" json:"hostname,omitempty"`
+	Agent         *Agent                 `protobuf:"bytes,1,opt,name=agent,proto3" json:"agent,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetAgentResponse) Reset() {
 	*x = GetAgentResponse{}
-	mi := &file_magos_v1_types_types_proto_msgTypes[5]
+	mi := &file_magos_v1_types_types_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -271,7 +322,7 @@ func (x *GetAgentResponse) String() string {
 func (*GetAgentResponse) ProtoMessage() {}
 
 func (x *GetAgentResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_magos_v1_types_types_proto_msgTypes[5]
+	mi := &file_magos_v1_types_types_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -284,21 +335,94 @@ func (x *GetAgentResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAgentResponse.ProtoReflect.Descriptor instead.
 func (*GetAgentResponse) Descriptor() ([]byte, []int) {
-	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{5}
+	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *GetAgentResponse) GetId() string {
+func (x *GetAgentResponse) GetAgent() *Agent {
 	if x != nil {
-		return x.Id
+		return x.Agent
 	}
-	return ""
+	return nil
 }
 
-func (x *GetAgentResponse) GetHostname() string {
+type GetAgentsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetAgentsRequest) Reset() {
+	*x = GetAgentsRequest{}
+	mi := &file_magos_v1_types_types_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetAgentsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetAgentsRequest) ProtoMessage() {}
+
+func (x *GetAgentsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_magos_v1_types_types_proto_msgTypes[7]
 	if x != nil {
-		return x.Hostname
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
 	}
-	return ""
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetAgentsRequest.ProtoReflect.Descriptor instead.
+func (*GetAgentsRequest) Descriptor() ([]byte, []int) {
+	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{7}
+}
+
+type GetAgentsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Agents        []*Agent               `protobuf:"bytes,1,rep,name=agents,proto3" json:"agents,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetAgentsResponse) Reset() {
+	*x = GetAgentsResponse{}
+	mi := &file_magos_v1_types_types_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetAgentsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetAgentsResponse) ProtoMessage() {}
+
+func (x *GetAgentsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_magos_v1_types_types_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetAgentsResponse.ProtoReflect.Descriptor instead.
+func (*GetAgentsResponse) Descriptor() ([]byte, []int) {
+	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *GetAgentsResponse) GetAgents() []*Agent {
+	if x != nil {
+		return x.Agents
+	}
+	return nil
 }
 
 type DescribeAgentRequest struct {
@@ -309,7 +433,7 @@ type DescribeAgentRequest struct {
 
 func (x *DescribeAgentRequest) Reset() {
 	*x = DescribeAgentRequest{}
-	mi := &file_magos_v1_types_types_proto_msgTypes[6]
+	mi := &file_magos_v1_types_types_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -321,7 +445,7 @@ func (x *DescribeAgentRequest) String() string {
 func (*DescribeAgentRequest) ProtoMessage() {}
 
 func (x *DescribeAgentRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_magos_v1_types_types_proto_msgTypes[6]
+	mi := &file_magos_v1_types_types_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -334,7 +458,7 @@ func (x *DescribeAgentRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DescribeAgentRequest.ProtoReflect.Descriptor instead.
 func (*DescribeAgentRequest) Descriptor() ([]byte, []int) {
-	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{6}
+	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{9}
 }
 
 type DescribeAgentResponse struct {
@@ -347,7 +471,7 @@ type DescribeAgentResponse struct {
 
 func (x *DescribeAgentResponse) Reset() {
 	*x = DescribeAgentResponse{}
-	mi := &file_magos_v1_types_types_proto_msgTypes[7]
+	mi := &file_magos_v1_types_types_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -359,7 +483,7 @@ func (x *DescribeAgentResponse) String() string {
 func (*DescribeAgentResponse) ProtoMessage() {}
 
 func (x *DescribeAgentResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_magos_v1_types_types_proto_msgTypes[7]
+	mi := &file_magos_v1_types_types_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -372,7 +496,7 @@ func (x *DescribeAgentResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DescribeAgentResponse.ProtoReflect.Descriptor instead.
 func (*DescribeAgentResponse) Descriptor() ([]byte, []int) {
-	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{7}
+	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *DescribeAgentResponse) GetId() string {
@@ -402,12 +526,17 @@ const file_magos_v1_types_types_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x18\n" +
 	"\aaddress\x18\x02 \x01(\tR\aaddress\"7\n" +
 	"\x1bRegisterAgentServerResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\"!\n" +
-	"\x0fGetAgentRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\">\n" +
-	"\x10GetAgentResponse\x12\x0e\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"3\n" +
+	"\x05Agent\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1a\n" +
-	"\bhostname\x18\x02 \x01(\tR\bhostname\"\x16\n" +
+	"\bhostname\x18\x02 \x01(\tR\bhostname\"5\n" +
+	"\x0fGetAgentRequest\x12\"\n" +
+	"\x05agent\x18\x01 \x01(\v2\f.types.AgentR\x05agent\"6\n" +
+	"\x10GetAgentResponse\x12\"\n" +
+	"\x05agent\x18\x01 \x01(\v2\f.types.AgentR\x05agent\"\x12\n" +
+	"\x10GetAgentsRequest\"9\n" +
+	"\x11GetAgentsResponse\x12$\n" +
+	"\x06agents\x18\x01 \x03(\v2\f.types.AgentR\x06agents\"\x16\n" +
 	"\x14DescribeAgentRequest\"C\n" +
 	"\x15DescribeAgentResponse\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1a\n" +
@@ -425,23 +554,29 @@ func file_magos_v1_types_types_proto_rawDescGZIP() []byte {
 	return file_magos_v1_types_types_proto_rawDescData
 }
 
-var file_magos_v1_types_types_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_magos_v1_types_types_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_magos_v1_types_types_proto_goTypes = []any{
 	(*HelloRequest)(nil),                // 0: types.HelloRequest
 	(*HelloResponse)(nil),               // 1: types.HelloResponse
 	(*RegisterAgentServerRequest)(nil),  // 2: types.RegisterAgentServerRequest
 	(*RegisterAgentServerResponse)(nil), // 3: types.RegisterAgentServerResponse
-	(*GetAgentRequest)(nil),             // 4: types.GetAgentRequest
-	(*GetAgentResponse)(nil),            // 5: types.GetAgentResponse
-	(*DescribeAgentRequest)(nil),        // 6: types.DescribeAgentRequest
-	(*DescribeAgentResponse)(nil),       // 7: types.DescribeAgentResponse
+	(*Agent)(nil),                       // 4: types.Agent
+	(*GetAgentRequest)(nil),             // 5: types.GetAgentRequest
+	(*GetAgentResponse)(nil),            // 6: types.GetAgentResponse
+	(*GetAgentsRequest)(nil),            // 7: types.GetAgentsRequest
+	(*GetAgentsResponse)(nil),           // 8: types.GetAgentsResponse
+	(*DescribeAgentRequest)(nil),        // 9: types.DescribeAgentRequest
+	(*DescribeAgentResponse)(nil),       // 10: types.DescribeAgentResponse
 }
 var file_magos_v1_types_types_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	4, // 0: types.GetAgentRequest.agent:type_name -> types.Agent
+	4, // 1: types.GetAgentResponse.agent:type_name -> types.Agent
+	4, // 2: types.GetAgentsResponse.agents:type_name -> types.Agent
+	3, // [3:3] is the sub-list for method output_type
+	3, // [3:3] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_magos_v1_types_types_proto_init() }
@@ -455,7 +590,7 @@ func file_magos_v1_types_types_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_magos_v1_types_types_proto_rawDesc), len(file_magos_v1_types_types_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

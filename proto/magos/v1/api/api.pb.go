@@ -25,29 +25,34 @@ var File_magos_v1_api_api_proto protoreflect.FileDescriptor
 
 const file_magos_v1_api_api_proto_rawDesc = "" +
 	"\n" +
-	"\x16magos/v1/api/api.proto\x12\x03api\x1a\x1amagos/v1/types/types.proto2\xda\x01\n" +
+	"\x16magos/v1/api/api.proto\x12\x03api\x1a\x1amagos/v1/types/types.proto2\x9c\x02\n" +
 	"\x03API\x124\n" +
 	"\x05Hello\x12\x13.types.HelloRequest\x1a\x14.types.HelloResponse\"\x00\x12^\n" +
 	"\x13RegisterAgentServer\x12!.types.RegisterAgentServerRequest\x1a\".types.RegisterAgentServerResponse\"\x00\x12=\n" +
-	"\bGetAgent\x12\x16.types.GetAgentRequest\x1a\x17.types.GetAgentResponse\"\x00B-Z+github.com/Hahn814/magos/proto/magos/v1/apib\x06proto3"
+	"\bGetAgent\x12\x16.types.GetAgentRequest\x1a\x17.types.GetAgentResponse\"\x00\x12@\n" +
+	"\tGetAgents\x12\x17.types.GetAgentsRequest\x1a\x18.types.GetAgentsResponse\"\x00B-Z+github.com/Hahn814/magos/proto/magos/v1/apib\x06proto3"
 
 var file_magos_v1_api_api_proto_goTypes = []any{
 	(*types.HelloRequest)(nil),                // 0: types.HelloRequest
 	(*types.RegisterAgentServerRequest)(nil),  // 1: types.RegisterAgentServerRequest
 	(*types.GetAgentRequest)(nil),             // 2: types.GetAgentRequest
-	(*types.HelloResponse)(nil),               // 3: types.HelloResponse
-	(*types.RegisterAgentServerResponse)(nil), // 4: types.RegisterAgentServerResponse
-	(*types.GetAgentResponse)(nil),            // 5: types.GetAgentResponse
+	(*types.GetAgentsRequest)(nil),            // 3: types.GetAgentsRequest
+	(*types.HelloResponse)(nil),               // 4: types.HelloResponse
+	(*types.RegisterAgentServerResponse)(nil), // 5: types.RegisterAgentServerResponse
+	(*types.GetAgentResponse)(nil),            // 6: types.GetAgentResponse
+	(*types.GetAgentsResponse)(nil),           // 7: types.GetAgentsResponse
 }
 var file_magos_v1_api_api_proto_depIdxs = []int32{
 	0, // 0: api.API.Hello:input_type -> types.HelloRequest
 	1, // 1: api.API.RegisterAgentServer:input_type -> types.RegisterAgentServerRequest
 	2, // 2: api.API.GetAgent:input_type -> types.GetAgentRequest
-	3, // 3: api.API.Hello:output_type -> types.HelloResponse
-	4, // 4: api.API.RegisterAgentServer:output_type -> types.RegisterAgentServerResponse
-	5, // 5: api.API.GetAgent:output_type -> types.GetAgentResponse
-	3, // [3:6] is the sub-list for method output_type
-	0, // [0:3] is the sub-list for method input_type
+	3, // 3: api.API.GetAgents:input_type -> types.GetAgentsRequest
+	4, // 4: api.API.Hello:output_type -> types.HelloResponse
+	5, // 5: api.API.RegisterAgentServer:output_type -> types.RegisterAgentServerResponse
+	6, // 6: api.API.GetAgent:output_type -> types.GetAgentResponse
+	7, // 7: api.API.GetAgents:output_type -> types.GetAgentsResponse
+	4, // [4:8] is the sub-list for method output_type
+	0, // [0:4] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name

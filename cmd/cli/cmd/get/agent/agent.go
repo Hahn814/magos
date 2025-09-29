@@ -53,13 +53,13 @@ var agentCmd = &cobra.Command{
 			ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
 			defer cancel()
 
-			r, err := client.GetAgent(ctx, &magostypespb.GetAgentRequest{Id: agentId})
+			r, err := client.GetAgent(ctx, &magostypespb.GetAgentRequest{Agent: &magostypespb.Agent{Id: agentId}})
 			if err != nil {
 				logger.Error("could not get agent", "error", err)
 				os.Exit(2)
 			}
 
-			logger.Debug("get agent", "hostname", r.GetHostname(), "id", r.GetId()) // TODO: implement shell output adapter
+			logger.Debug("get agent", "agent", r.Agent) // TODO: implement shell output adapter
 		}
 	},
 }

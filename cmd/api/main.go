@@ -19,12 +19,7 @@ import (
 var logLevel = new(slog.LevelVar) // INFO by default
 var logger = slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: logLevel}))
 
-type Agent struct {
-	id      string
-	address string
-}
-
-var agents = []Agent{}
+var agents = []*magostypespb.Agent{}
 
 type api struct {
 	magosapipb.UnimplementedAPIServer
@@ -37,7 +32,7 @@ func (s *api) Hello(_ context.Context, in *magostypespb.HelloRequest) (*magostyp
 
 func (s *api) RegisterAgentServer(_ context.Context, in *magostypespb.RegisterAgentServerRequest) (*magostypespb.RegisterAgentServerResponse, error) {
 	logger.Debug("register agent server", "agent", in)
-	agents = append(agents, Agent{id: in.GetId(), address: in.GetAddress()})
+	agents = append(agents, &magostypespb.Agent{Id: in.GetId(), Hostname: in.GetAddress()})
 	return &magostypespb.RegisterAgentServerResponse{Success: true}, nil
 }
 
@@ -64,15 +59,15 @@ func getAgentMetadata(address string) (*magostypespb.GetAgentResponse, error) {
 		os.Exit(2)
 	}
 
-	return &magostypespb.GetAgentResponse{Id: r.GetId(), Hostname: r.GetHostname()}, nil
+	return &magostypespb.GetAgentResponse{Agent: &magostypespb.Agent{Id: r.GetId(), Hostname: r.GetHostname()}}, nil
 }
 
 func (s *api) GetAgent(_ context.Context, in *magostypespb.GetAgentRequest) (*magostypespb.GetAgentResponse, error) {
 	logger.Debug("recieved", "request", in)
 
 	for _, agent := range agents {
-		if agent.id == in.Id {
-			response, err := getAgentMetadata(agent.address)
+		if agent.GetId() == in.Agent.Id {
+			response, err := getAgentMetadata(agent.GetHostname())
 			if err != nil {
 				logger.Error("could not get agent", "err", err)
 				return response, err
@@ -83,6 +78,11 @@ func (s *api) GetAgent(_ context.Context, in *magostypespb.GetAgentRequest) (*ma
 	}
 
 	return nil, fmt.Errorf("no valid agent id provided")
+}
+
+func (s *api) GetAgents(_ context.Context, in *magostypespb.GetAgentsRequest) (*magostypespb.GetAgentsResponse, error) {
+	logger.Debug("recieved", "request", in)
+	return &magostypespb.GetAgentsResponse{Agents: agents}, nil
 }
 
 func main() {

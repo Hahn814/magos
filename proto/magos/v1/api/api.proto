@@ -8,4 +8,5 @@ service API {
     rpc Hello (types.HelloRequest) returns (types.HelloResponse) {}
     rpc RegisterAgentServer (types.RegisterAgentServerRequest) returns (types.RegisterAgentServerResponse) {}
     rpc GetAgent(types.GetAgentRequest) returns (types.GetAgentResponse) {}
+    rpc GetAgents(types.GetAgentsRequest) returns (types.GetAgentsResponse) {}
 }
