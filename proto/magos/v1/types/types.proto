@@ -11,9 +11,26 @@ message HelloResponse {
 }
 
 message RegisterAgentServerRequest {
-    string address = 1;
+    string id = 1;
+    string address = 2;
 }
 
 message RegisterAgentServerResponse {
-    string address = 1;
+    bool success = 1;
+}
+
+message GetAgentRequest {
+    string id = 1;
+}
+
+message GetAgentResponse {
+    string id = 1;
+    string hostname = 2;
+}
+
+message DescribeAgentRequest {}
+
+message DescribeAgentResponse {
+    string id = 1;
+    string hostname = 2;
 }

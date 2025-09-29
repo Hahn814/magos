@@ -111,7 +111,8 @@ func (x *HelloResponse) GetName() string {
 
 type RegisterAgentServerRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Address       string                 `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Address       string                 `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -146,6 +147,13 @@ func (*RegisterAgentServerRequest) Descriptor() ([]byte, []int) {
 	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{2}
 }
 
+func (x *RegisterAgentServerRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
 func (x *RegisterAgentServerRequest) GetAddress() string {
 	if x != nil {
 		return x.Address
@@ -155,7 +163,7 @@ func (x *RegisterAgentServerRequest) GetAddress() string {
 
 type RegisterAgentServerResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Address       string                 `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -190,9 +198,193 @@ func (*RegisterAgentServerResponse) Descriptor() ([]byte, []int) {
 	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *RegisterAgentServerResponse) GetAddress() string {
+func (x *RegisterAgentServerResponse) GetSuccess() bool {
 	if x != nil {
-		return x.Address
+		return x.Success
+	}
+	return false
+}
+
+type GetAgentRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetAgentRequest) Reset() {
+	*x = GetAgentRequest{}
+	mi := &file_magos_v1_types_types_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetAgentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetAgentRequest) ProtoMessage() {}
+
+func (x *GetAgentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_magos_v1_types_types_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetAgentRequest.ProtoReflect.Descriptor instead.
+func (*GetAgentRequest) Descriptor() ([]byte, []int) {
+	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GetAgentRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type GetAgentResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Hostname      string                 `protobuf:"bytes,2,opt,name=hostname,proto3" json:"hostname,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetAgentResponse) Reset() {
+	*x = GetAgentResponse{}
+	mi := &file_magos_v1_types_types_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetAgentResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetAgentResponse) ProtoMessage() {}
+
+func (x *GetAgentResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_magos_v1_types_types_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetAgentResponse.ProtoReflect.Descriptor instead.
+func (*GetAgentResponse) Descriptor() ([]byte, []int) {
+	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetAgentResponse) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *GetAgentResponse) GetHostname() string {
+	if x != nil {
+		return x.Hostname
+	}
+	return ""
+}
+
+type DescribeAgentRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DescribeAgentRequest) Reset() {
+	*x = DescribeAgentRequest{}
+	mi := &file_magos_v1_types_types_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DescribeAgentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DescribeAgentRequest) ProtoMessage() {}
+
+func (x *DescribeAgentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_magos_v1_types_types_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DescribeAgentRequest.ProtoReflect.Descriptor instead.
+func (*DescribeAgentRequest) Descriptor() ([]byte, []int) {
+	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{6}
+}
+
+type DescribeAgentResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Hostname      string                 `protobuf:"bytes,2,opt,name=hostname,proto3" json:"hostname,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DescribeAgentResponse) Reset() {
+	*x = DescribeAgentResponse{}
+	mi := &file_magos_v1_types_types_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DescribeAgentResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DescribeAgentResponse) ProtoMessage() {}
+
+func (x *DescribeAgentResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_magos_v1_types_types_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DescribeAgentResponse.ProtoReflect.Descriptor instead.
+func (*DescribeAgentResponse) Descriptor() ([]byte, []int) {
+	return file_magos_v1_types_types_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *DescribeAgentResponse) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *DescribeAgentResponse) GetHostname() string {
+	if x != nil {
+		return x.Hostname
 	}
 	return ""
 }
@@ -205,11 +397,21 @@ const file_magos_v1_types_types_proto_rawDesc = "" +
 	"\fHelloRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\"#\n" +
 	"\rHelloResponse\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\"6\n" +
-	"\x1aRegisterAgentServerRequest\x12\x18\n" +
-	"\aaddress\x18\x01 \x01(\tR\aaddress\"7\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\"F\n" +
+	"\x1aRegisterAgentServerRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x18\n" +
+	"\aaddress\x18\x02 \x01(\tR\aaddress\"7\n" +
 	"\x1bRegisterAgentServerResponse\x12\x18\n" +
-	"\aaddress\x18\x01 \x01(\tR\aaddressB/Z-github.com/Hahn814/magos/proto/magos/v1/typesb\x06proto3"
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"!\n" +
+	"\x0fGetAgentRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\">\n" +
+	"\x10GetAgentResponse\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1a\n" +
+	"\bhostname\x18\x02 \x01(\tR\bhostname\"\x16\n" +
+	"\x14DescribeAgentRequest\"C\n" +
+	"\x15DescribeAgentResponse\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1a\n" +
+	"\bhostname\x18\x02 \x01(\tR\bhostnameB/Z-github.com/Hahn814/magos/proto/magos/v1/typesb\x06proto3"
 
 var (
 	file_magos_v1_types_types_proto_rawDescOnce sync.Once
@@ -223,12 +425,16 @@ func file_magos_v1_types_types_proto_rawDescGZIP() []byte {
 	return file_magos_v1_types_types_proto_rawDescData
 }
 
-var file_magos_v1_types_types_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_magos_v1_types_types_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_magos_v1_types_types_proto_goTypes = []any{
 	(*HelloRequest)(nil),                // 0: types.HelloRequest
 	(*HelloResponse)(nil),               // 1: types.HelloResponse
 	(*RegisterAgentServerRequest)(nil),  // 2: types.RegisterAgentServerRequest
 	(*RegisterAgentServerResponse)(nil), // 3: types.RegisterAgentServerResponse
+	(*GetAgentRequest)(nil),             // 4: types.GetAgentRequest
+	(*GetAgentResponse)(nil),            // 5: types.GetAgentResponse
+	(*DescribeAgentRequest)(nil),        // 6: types.DescribeAgentRequest
+	(*DescribeAgentResponse)(nil),       // 7: types.DescribeAgentResponse
 }
 var file_magos_v1_types_types_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -249,7 +455,7 @@ func file_magos_v1_types_types_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_magos_v1_types_types_proto_rawDesc), len(file_magos_v1_types_types_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -20,7 +20,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Agent_Hello_FullMethodName = "/agent.Agent/Hello"
+	Agent_Hello_FullMethodName    = "/agent.Agent/Hello"
+	Agent_Describe_FullMethodName = "/agent.Agent/Describe"
 )
 
 // AgentClient is the client API for Agent service.
@@ -28,6 +29,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AgentClient interface {
 	Hello(ctx context.Context, in *types.HelloRequest, opts ...grpc.CallOption) (*types.HelloResponse, error)
+	Describe(ctx context.Context, in *types.DescribeAgentRequest, opts ...grpc.CallOption) (*types.DescribeAgentResponse, error)
 }
 
 type agentClient struct {
@@ -48,11 +50,22 @@ func (c *agentClient) Hello(ctx context.Context, in *types.HelloRequest, opts ..
 	return out, nil
 }
 
+func (c *agentClient) Describe(ctx context.Context, in *types.DescribeAgentRequest, opts ...grpc.CallOption) (*types.DescribeAgentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(types.DescribeAgentResponse)
+	err := c.cc.Invoke(ctx, Agent_Describe_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AgentServer is the server API for Agent service.
 // All implementations must embed UnimplementedAgentServer
 // for forward compatibility.
 type AgentServer interface {
 	Hello(context.Context, *types.HelloRequest) (*types.HelloResponse, error)
+	Describe(context.Context, *types.DescribeAgentRequest) (*types.DescribeAgentResponse, error)
 	mustEmbedUnimplementedAgentServer()
 }
 
@@ -65,6 +78,9 @@ type UnimplementedAgentServer struct{}
 
 func (UnimplementedAgentServer) Hello(context.Context, *types.HelloRequest) (*types.HelloResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Hello not implemented")
+}
+func (UnimplementedAgentServer) Describe(context.Context, *types.DescribeAgentRequest) (*types.DescribeAgentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Describe not implemented")
 }
 func (UnimplementedAgentServer) mustEmbedUnimplementedAgentServer() {}
 func (UnimplementedAgentServer) testEmbeddedByValue()               {}
@@ -105,6 +121,24 @@ func _Agent_Hello_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Agent_Describe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(types.DescribeAgentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentServer).Describe(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Agent_Describe_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentServer).Describe(ctx, req.(*types.DescribeAgentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Agent_ServiceDesc is the grpc.ServiceDesc for Agent service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -115,6 +149,10 @@ var Agent_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Hello",
 			Handler:    _Agent_Hello_Handler,
+		},
+		{
+			MethodName: "Describe",
+			Handler:    _Agent_Describe_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

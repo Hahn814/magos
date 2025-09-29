@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
+	"math/rand"
 	"net"
 	"os"
 	"time"
@@ -17,6 +18,7 @@ import (
 
 var logLevel = new(slog.LevelVar) // INFO by default
 var logger = slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: logLevel}))
+var id = randomString(10)
 
 type agent struct {
 	magosagentpb.UnimplementedAgentServer
@@ -27,9 +29,26 @@ type api struct {
 	Address string
 }
 
+func randomString(length int) string {
+	rand.Seed(time.Now().UnixNano())
+	b := make([]byte, length+2)
+	rand.Read(b)
+	return fmt.Sprintf("%x", b)[2 : length+2]
+}
+
 func (s *agent) Hello(_ context.Context, in *magostypespb.HelloRequest) (*magostypespb.HelloResponse, error) {
 	logger.Debug("recieved: %v", "message", in.GetName())
 	return &magostypespb.HelloResponse{Name: "Hello " + in.GetName()}, nil
+}
+
+func (s *agent) Describe(_ context.Context, in *magostypespb.DescribeAgentRequest) (*magostypespb.DescribeAgentResponse, error) {
+	logger.Debug("recieved", "request", in)
+	hostname, err := os.Hostname()
+	if err != nil {
+		return &magostypespb.DescribeAgentResponse{}, err
+	}
+
+	return &magostypespb.DescribeAgentResponse{Id: id, Hostname: hostname}, nil
 }
 
 func (s *api) registerAgentServer(_ context.Context, in *magostypespb.RegisterAgentServerRequest) {
@@ -82,7 +101,7 @@ func (s *api) registerAgentServer(_ context.Context, in *magostypespb.RegisterAg
 		os.Exit(2)
 	}
 
-	logger.Info("registered agent", "addr", r.GetAddress())
+	logger.Info("registered agent", "success", r.GetSuccess())
 }
 
 func findOpenPrivatePort(minPort int, maxPort int) (int, error) {
@@ -135,7 +154,7 @@ func main() {
 			}
 			ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 			defer cancel()
-			api.registerAgentServer(ctx, &magostypespb.RegisterAgentServerRequest{Address: agent_addr})
+			api.registerAgentServer(ctx, &magostypespb.RegisterAgentServerRequest{Address: agent_addr, Id: id})
 			if err := s.Serve(lis); err != nil {
 				logger.Error("Failed to serve", "error", err)
 				agentError <- err

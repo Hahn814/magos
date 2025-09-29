@@ -22,6 +22,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	API_Hello_FullMethodName               = "/api.API/Hello"
 	API_RegisterAgentServer_FullMethodName = "/api.API/RegisterAgentServer"
+	API_GetAgent_FullMethodName            = "/api.API/GetAgent"
 )
 
 // APIClient is the client API for API service.
@@ -30,6 +31,7 @@ const (
 type APIClient interface {
 	Hello(ctx context.Context, in *types.HelloRequest, opts ...grpc.CallOption) (*types.HelloResponse, error)
 	RegisterAgentServer(ctx context.Context, in *types.RegisterAgentServerRequest, opts ...grpc.CallOption) (*types.RegisterAgentServerResponse, error)
+	GetAgent(ctx context.Context, in *types.GetAgentRequest, opts ...grpc.CallOption) (*types.GetAgentResponse, error)
 }
 
 type aPIClient struct {
@@ -60,12 +62,23 @@ func (c *aPIClient) RegisterAgentServer(ctx context.Context, in *types.RegisterA
 	return out, nil
 }
 
+func (c *aPIClient) GetAgent(ctx context.Context, in *types.GetAgentRequest, opts ...grpc.CallOption) (*types.GetAgentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(types.GetAgentResponse)
+	err := c.cc.Invoke(ctx, API_GetAgent_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // APIServer is the server API for API service.
 // All implementations must embed UnimplementedAPIServer
 // for forward compatibility.
 type APIServer interface {
 	Hello(context.Context, *types.HelloRequest) (*types.HelloResponse, error)
 	RegisterAgentServer(context.Context, *types.RegisterAgentServerRequest) (*types.RegisterAgentServerResponse, error)
+	GetAgent(context.Context, *types.GetAgentRequest) (*types.GetAgentResponse, error)
 	mustEmbedUnimplementedAPIServer()
 }
 
@@ -81,6 +94,9 @@ func (UnimplementedAPIServer) Hello(context.Context, *types.HelloRequest) (*type
 }
 func (UnimplementedAPIServer) RegisterAgentServer(context.Context, *types.RegisterAgentServerRequest) (*types.RegisterAgentServerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterAgentServer not implemented")
+}
+func (UnimplementedAPIServer) GetAgent(context.Context, *types.GetAgentRequest) (*types.GetAgentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAgent not implemented")
 }
 func (UnimplementedAPIServer) mustEmbedUnimplementedAPIServer() {}
 func (UnimplementedAPIServer) testEmbeddedByValue()             {}
@@ -139,6 +155,24 @@ func _API_RegisterAgentServer_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _API_GetAgent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(types.GetAgentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(APIServer).GetAgent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: API_GetAgent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(APIServer).GetAgent(ctx, req.(*types.GetAgentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // API_ServiceDesc is the grpc.ServiceDesc for API service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -153,6 +187,10 @@ var API_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RegisterAgentServer",
 			Handler:    _API_RegisterAgentServer_Handler,
+		},
+		{
+			MethodName: "GetAgent",
+			Handler:    _API_GetAgent_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

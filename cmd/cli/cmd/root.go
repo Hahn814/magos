@@ -29,7 +29,7 @@ func Execute() {
 
 func init() {
 	RootCmd.PersistentFlags().StringP("verbosity", "v", "DEBUG", "logging verbosity (DEBUG, INFO, WARN, ERROR)")
-	viper.BindPFlag("verbosity", RootCmd.Flags().Lookup("verbosity"))
+	viper.BindPFlag("verbosity", RootCmd.PersistentFlags().Lookup("verbosity"))
 	initEnvironment()
 }
 
