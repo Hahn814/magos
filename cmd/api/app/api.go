@@ -2,16 +2,11 @@ package app
 
 import (
 	"fmt"
-	"log/slog"
 	"net"
-	"os"
 
 	magosapipb "github.com/Hahn814/magos/proto/magos/v1/api"
 	"google.golang.org/grpc"
 )
-
-var logLevel = new(slog.LevelVar)
-var logger = slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: logLevel}))
 
 type apiConfig struct {
 	magosapipb.UnimplementedAPIServer
