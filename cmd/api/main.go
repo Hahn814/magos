@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
-	"net"
 	"os"
 	"time"
 
+	"github.com/Hahn814/magos/cmd/api/app"
 	magosagentpb "github.com/Hahn814/magos/proto/magos/v1/agent"
 	magosapipb "github.com/Hahn814/magos/proto/magos/v1/api"
 	magostypespb "github.com/Hahn814/magos/proto/magos/v1/types"
@@ -88,41 +88,12 @@ func (s *api) GetAgents(_ context.Context, in *magostypespb.GetAgentsRequest) (*
 func main() {
 	logLevel.Set(slog.LevelDebug) // TODO: bind log level to environment
 
-	serverReady := make(chan bool)
 	serverError := make(chan error)
+	serverReady := make(chan bool)
+	addr := viper.GetString("api.addr")
+	port := viper.GetInt("api.port")
 
-	go func() {
-		// TODO: this should be refactored to be a function provided by the api reciever
-		viper.SetEnvPrefix("magos")
-		viper.BindEnv("api.port")
-		viper.SetDefault("api.port", 50051)
-		port := viper.GetInt("api.port")
-		addr := viper.GetString("api.addr")
-
-		if addr == "" {
-			addr = "0.0.0.0"
-		}
-
-		lis, err := net.Listen("tcp", fmt.Sprintf("%s:%d", addr, port))
-		if err != nil {
-			logger.Error("Failed to listen", "error", err)
-			os.Exit(1)
-		}
-		s := grpc.NewServer()
-		magosapipb.RegisterAPIServer(s, &api{})
-		configAttrs := slog.Group("configuration", "port", port, "addr", lis.Addr())
-		go func() {
-			logger.Info("Starting Magos API Server..", configAttrs)
-			if err := s.Serve(lis); err != nil {
-				logger.Error("Failed to serve", "error", err)
-				serverError <- err
-				return
-			}
-
-		}()
-
-		serverReady <- true // TODO: replace with an actual request to the APIServer service to confirm readiness
-	}()
+	app.NewAPIClient(addr, port, serverError, serverReady)
 
 	select {
 	case <-serverReady:
